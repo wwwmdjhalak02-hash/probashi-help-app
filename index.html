@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>প্রবাসী সাহায্য - লগইন</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-900 text-white min-h-screen flex items-center justify-center p-4">
+    <div class="bg-slate-800 p-6 rounded-2xl shadow-xl w-full max-w-md border border-slate-700">
+        <div class="text-center mb-6">
+            <h1 class="text-2xl font-bold text-amber-500 mb-2">প্রবাসী সাহায্য</h1>
+            <p class="text-slate-400 text-sm">বিদেশে থাকা প্রবাসীদের জন্য ২৪ ঘণ্টার বিশ্বস্ত সেবা</p>
+        </div>
+        <form onsubmit="handleLogin(event)" class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium mb-1">ফোন নম্বর</label>
+                <input type="tel" id="loginPhone" required placeholder="+880 1XXXXXXXXX" class="w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white focus:outline-none focus:border-amber-500">
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1">পাসওয়ার্ড</label>
+                <input type="password" required placeholder="••••••••" class="w-full bg-slate-700 border border-slate-600 rounded-lg p-3 text-white focus:outline-none focus:border-amber-500">
+            </div>
+            <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold py-3 rounded-lg transition duration-200">লগইন করুন →</button>
+        </form>
+    </div>
+    <script>
+        function handleLogin(e) {
+            e.preventDefault();
+            const phone = document.getElementById('loginPhone').value;
+            localStorage.setItem('userPhone', phone);
+            window.location.href = 'home.html';
+        }
+    </script>
+</body>
+</html>
+
