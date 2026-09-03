@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ইউজার প্রোফাইল - প্রবাসী সাহায্য</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-900 text-white min-h-screen p-4 flex items-center justify-center">
+    <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl w-full max-w-md">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-lg font-bold text-amber-500">মাই প্রোফাইল</h1>
+            <a href="home.html" class="text-xs bg-slate-700 px-3 py-1.5 rounded-lg text-slate-300">হোমে যান</a>
+        </div>
+
+        <div class="text-center mb-6">
+            <div class="w-20 h-20 bg-slate-700 border-2 border-amber-500 rounded-full flex items-center justify-center mx-auto mb-3 text-amber-500 text-3xl">
+                <i class="fas fa-user"></i>
+            </div>
+            <h2 id="displayPhone" class="text-lg font-bold text-slate-200">+8801XXXXXXXXX</h2>
+            <p class="text-xs text-slate-400">সাধারণ ব্যবহারকারী</p>
+        </div>
+
+        <form onsubmit="saveProfile(event)" class="space-y-4">
+            <div>
+                <label class="block text-xs font-medium text-slate-300 mb-1">আপনার নাম</label>
+                <input type="text" id="userName" placeholder="আপনার নাম লিখুন" class="w-full bg-slate-900 border border-slate-700 p-2.5 rounded-lg text-sm text-white">
+            </div>
+            <div>
+                <label class="block text-xs font-medium text-slate-300 mb-1">বর্তমান দেশ / অবস্থান</label>
+                <input type="text" id="userLocation" placeholder="যেমন: রিয়াদ, সৌদি আরব" class="w-full bg-slate-900 border border-slate-700 p-2.5 rounded-lg text-sm text-white">
+            </div>
+            <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold py-2.5 rounded-lg text-sm transition">তথ্য সেভ করুন</button>
+        </form>
+
+        <div class="mt-6 pt-4 border-t border-slate-700">
+            <button onclick="logout()" class="w-full bg-red-500/10 text-red-400 hover:bg-red-500/20 font-bold py-2 rounded-lg text-sm transition"><i class="fas fa-sign-out-alt mr-2"></i>লগআউট করুন</button>
+        </div>
+    </div>
+
+    <script>
+        const phone = localStorage.getItem('userPhone') || 'নম্বর পাওয়া যায়নি';
+        document.getElementById('displayPhone').innerText = phone;
+        document.getElementById('userName').value = localStorage.getItem('userName') || '';
+        document.getElementById('userLocation').value = localStorage.getItem('userLocation') || '';
+
+        function saveProfile(e) {
+            e.preventDefault();
+            localStorage.setItem('userName', document.getElementById('userName').value);
+            localStorage.setItem('userLocation', document.getElementById('userLocation').value);
+            alert('প্রোফাইল আপডেট সফল হয়েছে!');
+        }
+
+        function logout() {
+            localStorage.removeItem('userPhone');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
