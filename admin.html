@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>এডমিন প্যানেল - প্রবাসী সাহায্য</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-900 text-white min-h-screen p-4">
+    <div class="max-w-2xl mx-auto bg-slate-800 p-6 rounded-2xl border border-slate-700 mt-4">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-xl font-bold text-amber-500">এডমিন কন্ট্রোল প্যানেল</h1>
+            <a href="home.html" class="text-xs bg-slate-700 px-3 py-2 rounded-lg text-slate-300">হোম পেজ</a>
+        </div>
+
+        <!-- Add Agent Form -->
+        <form onsubmit="addAgent(event)" class="space-y-3 mb-8 bg-slate-900 p-4 rounded-xl border border-slate-700">
+            <h2 class="text-sm font-semibold text-amber-400">নতুন এজেন্ট যোগ করুন</h2>
+            <input type="text" id="agentName" placeholder="এজেন্টের নাম" required class="w-full bg-slate-800 border border-slate-700 p-2.5 rounded-lg text-sm">
+            <input type="text" id="agentRole" placeholder="পদবী (যেমন: অফিসিয়াল এজেন্ট)" required class="w-full bg-slate-800 border border-slate-700 p-2.5 rounded-lg text-sm">
+            <input type="text" id="agentLoc" placeholder="লোকেশন (যেমন: রিয়াদ, সৌদি আরব)" required class="w-full bg-slate-800 border border-slate-700 p-2.5 rounded-lg text-sm">
+            <div class="flex gap-2">
+                <input type="tel" id="agentPhone" placeholder="ফোন (+880...)" required class="w-1/2 bg-slate-800 border border-slate-700 p-2.5 rounded-lg text-sm">
+                <input type="tel" id="agentWA" placeholder="হোয়াটসঅ্যাপ (880...)" required class="w-1/2 bg-slate-800 border border-slate-700 p-2.5 rounded-lg text-sm">
+            </div>
+            <button type="submit" class="w-full bg-amber-500 text-slate-900 font-bold py-2.5 rounded-lg">এজেন্ট যুক্ত করুন</button>
+        </form>
+
+        <!-- Manage Existing Agents -->
+        <h2 class="text-sm font-semibold text-slate-400 mb-3">বর্তমান এজেন্ট তালিকা</h2>
+        <div id="adminAgentList" class="space-y-2"></div>
+    </div>
+
+    <script>
+        const defaultAgents = [
+            { id: '1', name: 'মোহাম্মদ রহিম', role: 'অফিসিয়াল সাহায্যকারী এজেন্ট', location: 'বাগদাদ, ইরাক', phone: '+8801700000000', wa: '8801700000000' },
+            { id: '2', name: 'সেলিনা আক্তার', role: 'কমিউনিটি সহায়তা এজেন্ট', location: 'দুবাই, সংযুক্ত আরব আমিরাত', phone: '+8801800000000', wa: '8801800000000' }
+        ];
+
+        function renderAdminAgents() {
+            const agents = JSON.parse(localStorage.getItem('agents')) || defaultAgents;
+            document.getElementById('adminAgentList').innerHTML = agents.map(a => `
+                <div class="flex justify-between items-center bg-slate-900 p-3 rounded-lg border border-slate-700">
+                    <div>
+                        <p class="font-bold text-amber-400 text-sm">${a.name}</p>
+                        <p class="text-xs text-slate-400">${a.location}</p>
+                    </div>
+                    <button onclick="deleteAgent('${a.id}')" class="text-red-400 p-2 text-xs hover:bg-slate-800 rounded-lg"><i class="fas fa-trash"></i> মুছে ফেলুন</button>
+                </div>
+            `).join('');
+        }
+
+        function addAgent(e) {
+            e.preventDefault();
+            const agents = JSON.parse(localStorage.getItem('agents')) || defaultAgents;
+            const newAgent = {
+                id: Date.now().toString(),
+                name: document.getElementById('agentName').value,
+                role: document.getElementById('agentRole').value,
+                location: document.getElementById('agentLoc').value,
+                phone: document.getElementById('agentPhone').value,
+                wa: document.getElementById('agentWA').value
+            };
+            agents.push(newAgent);
+            localStorage.setItem('agents', JSON.stringify(agents));
+            e.target.reset();
+            renderAdminAgents();
+        }
+
+        function deleteAgent(id) {
+            let agents = JSON.parse(localStorage.getItem('agents')) || defaultAgents;
+            agents = agents.filter(a => a.id !== id);
+            localStorage.setItem('agents', JSON.stringify(agents));
+            renderAdminAgents();
+        }
+
+        renderAdminAgents();
+    </script>
+</body>
+</html>
