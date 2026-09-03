@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>এজেন্ট প্রোফাইল - প্রবাসী সাহায্য</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-slate-900 text-white min-h-screen p-4 flex items-center justify-center">
+    <div class="bg-slate-800 border border-slate-700 p-6 rounded-2xl w-full max-w-md text-center">
+        <a href="home.html" class="inline-block text-slate-400 hover:text-white mb-4 text-sm float-left"><i class="fas fa-arrow-left"></i> পেছনে যান</a>
+        <div class="clear-both"></div>
+        <div id="agentDetail"></div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const agentId = urlParams.get('id');
+        const defaultAgents = [
+            { id: '1', name: 'মোহাম্মদ রহিম', role: 'অফিসিয়াল সাহায্যকারী এজেন্ট', location: 'বাগদাদ, ইরাক', phone: '+8801700000000', wa: '8801700000000' },
+            { id: '2', name: 'সেলিনা আক্তার', role: 'কমিউনিটি সহায়তা এজেন্ট', location: 'দুবাই, সংযুক্ত আরব আমিরাত', phone: '+8801800000000', wa: '8801800000000' }
+        ];
+        const agents = JSON.parse(localStorage.getItem('agents')) || defaultAgents;
+        const agent = agents.find(a => a.id === agentId) || agents[0];
+
+        document.getElementById('agentDetail').innerHTML = `
+            <div class="w-20 h-20 bg-amber-500 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-900 text-2xl font-bold">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-amber-400 mb-1">${agent.name}</h2>
+            <p class="text-slate-400 text-sm mb-2">${agent.role}</p>
+            <p class="text-slate-300 mb-6"><i class="fas fa-map-marker-alt text-red-400 mr-1"></i> ${agent.location}</p>
+            
+            <div class="space-y-3">
+                <a href="tel:${agent.phone}" class="block bg-slate-700 hover:bg-slate-600 text-amber-400 py-3 rounded-xl font-bold"><i class="fas fa-phone mr-2"></i> সরাসরি কল করুন</a>
+                <a href="https://wa.me/${agent.wa}" target="_blank" class="block bg-emerald-600 hover:bg-emerald-500 text-white py-3 rounded-xl font-bold"><i class="fab fa-whatsapp mr-2"></i> হোয়াটসঅ্যাপে কথা বলুন</a>
+            </div>
+        `;
+    </script>
+</body>
+</html>
